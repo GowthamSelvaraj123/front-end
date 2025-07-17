@@ -1,8 +1,6 @@
-import Banner from "@/components/section/Banner";
-import DynamicGrid from "@/components/section/DynamicGrid";
-import ImageCta from "@/components/section/ImageCta";
-import MultiTabCard from "@/components/section/MultiTabCard";
+import DynamicComponent from "@/lib/DynamicComponent";
 import { fetchPageSections } from "@/lib/pageSections";
+
 export const revalidate = 60;
 export default async function Home() {
   const { sections, error } = await fetchPageSections('home');
@@ -10,18 +8,7 @@ export default async function Home() {
   return (
     <>
       {sections.map((section, idx) => {
-        switch (section.code) {
-          case 'banner':
-            return <Banner key={idx} data={section} />;
-          case 'multitab':
-            return <MultiTabCard key={idx} cardsData={section.cards} />;
-          case 'grid':
-            return <DynamicGrid key={idx} data={section.cards} />;
-          case 'imagecta':
-            return <ImageCta key={idx} data={section} />;
-          default:
-            return null;
-        }
+        return(<DynamicComponent key={idx} id={section.code} data={section}></DynamicComponent>)
       })}
     </>
   );
