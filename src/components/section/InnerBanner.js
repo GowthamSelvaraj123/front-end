@@ -1,10 +1,10 @@
+'use client'
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 
 export default function InnerBanner({ slides = [] }) {
   const [current, setCurrent] = useState(0);
-
   useEffect(() => {
     if (slides.length === 0) return;
 
@@ -16,7 +16,7 @@ export default function InnerBanner({ slides = [] }) {
 
   if (!slides.length) return null;
 
-  const { image, title, desc } = slides[current];
+  const { image, title, description } = slides[current];
 
   return (
     <section className="inner-page-banner relative w-full h-[450px] md:h-[300px] lg:h-[400px] overflow-hidden">
@@ -44,7 +44,7 @@ export default function InnerBanner({ slides = [] }) {
             className="max-w-[600px] md:max-w-[420px]"
           >
             <h1 className="text-3xl lg:text-4xl font-semibold text-white mb-4">{title}</h1>
-            <p className="text-white text-base md:text-lg leading-snug">{desc}</p>
+            <p className="text-white text-base md:text-lg leading-snug">{description}</p>
           </motion.div>
         </AnimatePresence>
       </div>

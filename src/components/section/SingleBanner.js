@@ -11,7 +11,8 @@ const bannerImages = [
   { id: 5, src: '/assets/powering-digital-growth-with-smart-infrastructure-data-center.jpg', alt: 'Banner 5' },
 ];
 
-export default function SingleBanner() {
+export default function SingleBanner({data}) {
+  console.log(data);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -44,20 +45,20 @@ export default function SingleBanner() {
 
         {/* Text Content Section */}
         <div>
-          <h5 className="text-white mb-0 text-[24px]">Powering Digital Growth <br/> with Smart Infrastructure</h5>
+          <h5 className="text-white mb-0 text-[24px]">{data.sub_title}</h5>
           <h2 className="text-white font-bold relative mb-4 text-[60px]">
-            Our Capabilities
+            {data.title}
             <span className="absolute -top-2 ml-2 w-6 h-6 bg-gradient-to-br from-purple-400 to-pink-300 rounded-full blur-sm" />
           </h2>
           <h5 className="text-purple-200 text-lg max-w-xl mb-6 text-[24px]">
-            We provide end-to-end cloud and data center solutions — from custom architecture to 24x7 managed support — built to deliver performance, security, and scalability for businesses of all sizes.
+            {data.description}
           </h5>
 
           <a
-            href="/pricing"
+            href={data.button_link}
             className="inline-flex items-center gap-3 bg-white text-red-600 px-6 py-3 rounded-lg hover:bg-red-600 transition-all text-sm font-medium"
           >
-            Try now
+            {data.bottom_text}
           </a>
         </div>
       </div>

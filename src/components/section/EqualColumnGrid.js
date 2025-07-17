@@ -1,7 +1,8 @@
+'use client'
 import React from 'react';
-import { motion } from 'framer-motion';
 
 export default function EqualColumnGrid({data}) {
+  const gridContent = data.cards?.find(item => item.subcards)?.subcards || [];
   return (
     <section className="py-12">
       <div className="container mx-auto px-4">
@@ -15,7 +16,7 @@ export default function EqualColumnGrid({data}) {
         </div>
 
         <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {data.cards.map((card, idx) => (
+          {gridContent.map((card, idx) => (
             <div
               key={idx}
               className="relative bg-white rounded-xl overflow-hidden shadow-sm group aspect-[1/1] flex items-end p-4 "

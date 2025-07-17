@@ -1,19 +1,20 @@
 'use client'
+import { cardData } from '@/data/home';
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 
-export default function MultiTabCard({ tabs = [], cardsData = [] }) {
+export default function MultiTabCard({cardsData = [] }) {
+  const tabs = cardsData.map(card => card.title);
   const [activeTab, setActiveTab] = useState(tabs[0]);
-
   useEffect(() => {
-    // Reset activeTab if tabs prop changes
     if (tabs.length && !tabs.includes(activeTab)) {
       setActiveTab(tabs[0]);
     }
   }, [tabs]);
 
-  const filteredCards = cardsData.filter(card => card.category === activeTab);
-
+  const activeCard = cardsData.find(card => card.title === activeTab);
+  const subcards = activeCard?.subcards || [];
+  console.log(subcards);
   return (
     <div className="w-full px-4 py-14 bg-gray-50">
       <div className="container mx-auto">
@@ -45,16 +46,16 @@ export default function MultiTabCard({ tabs = [], cardsData = [] }) {
         </div>
 
         {/* Cards or Coming Soon */}
-        {filteredCards.length > 0 ? (
+        {subcards.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-            {filteredCards.map((card) => (
+            {subcards.map((card) => (
               <div
                 key={card.id}
                 className="bg-white rounded-2xl shadow-md hover:shadow-lg transition overflow-hidden flex flex-col items-center text-center px-6 py-12"
               >
                 <div className="w-12 h-12 mb-4">
                   <Image
-                    src={card.icon}
+                    src={card.image}
                     alt={card.title}
                     width={46}
                     height={46}
@@ -64,10 +65,10 @@ export default function MultiTabCard({ tabs = [], cardsData = [] }) {
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">{card.title}</h3>
                 <p className="text-sm text-gray-600 mb-5">{card.description}</p>
                 <a
-                  href={card.link}
+                  href={card.button_link}
                   className="mt-auto inline-block px-4 py-2 bg-black text-white rounded-sm text-sm font-medium hover:bg-red-600 hover:text-white transition"
                 >
-                  Learn More
+                  {card.button_text}
                 </a>
               </div>
             ))}

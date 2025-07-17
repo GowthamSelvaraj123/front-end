@@ -2,41 +2,34 @@ import HalfShowSlider from '@/components/section/HalfShowSlider'
 import IconCard from '@/components/section/IconCard'
 import ImageCard from '@/components/section/ImageCard'
 import SingleBanner from '@/components/section/SingleBanner'
-import StylistCard from '@/components/section/StylistCard'
 import StylishCard2 from '@/components/section/StylishCard2'
 import React from 'react'
 import NewsLetter from '@/components/section/NewsLetter'
+import { fetchPageSections } from '@/lib/pageSections'
 
-const slideData = [
-  {
-    id: 1,
-    title: 'Disaster Recovery as a Service (DRaaS)',
-    desc: "Protect your workloads with automated failover and real-time backups.",
-    image: '/assets/disaster-recovery-as-a-service.jpg',
-  },
-  {
-    id: 2,
-    title: 'Hybrid Cloud Infrastructure',
-    desc: "Connect on-premise data with our private cloud via dedicated links or VPN.",
-    image: '/assets/hybrid-cloud-infrastructure.jpg',
-  },
-  {
-    id: 3,
-    title: 'Web & App Hosting',
-    desc: "Scalable virtual machines with autoscaling, firewalls, and SSL support.",
-    image: '/assets/web-and-app.jpg',
-  },
-];
-
-export default function page() {
+export default async function page() {
+    const { sections, error } = await fetchPageSections('solutions');
+    if (error) return <div className="text-red-600 text-center py-10">{error}</div>;
   return (
     <>
-    <HalfShowSlider slides={slideData}></HalfShowSlider>
-    <SingleBanner></SingleBanner>
-    <IconCard></IconCard>
-    <StylishCard2></StylishCard2>
-    <ImageCard></ImageCard>
-    <NewsLetter></NewsLetter>
+       {sections.map((section, idx) => {
+            switch (section.code) {
+              case 'halfshowslider':
+                return <HalfShowSlider key={idx} slides={section.cards}></HalfShowSlider>
+              case 'singlebanner':
+                return <SingleBanner key={idx} data={section}></SingleBanner>
+              case 'iconcard':
+                return <IconCard key={idx}></IconCard>
+              case 'stylishcard':
+                return <StylishCard2></StylishCard2>
+              case 'imagecard':
+                return <ImageCard></ImageCard>
+              case 'newsletter':
+                return <NewsLetter key={idx} data={section}></NewsLetter>
+              default:
+                return null;
+            }
+          })}
     </>
   )
 }

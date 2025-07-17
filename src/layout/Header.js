@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import Image from 'next/image';
+import api from '@/lib/axios';
 
 const actionLinks = [
     {
@@ -33,7 +34,7 @@ export default function Header() {
     };
 
     useEffect(() => {
-        axios.get('http://103.99.150.52:8000/api/menus/')
+        api.get('/menus/')
             .then((response) => {
                 const headerMenu = response.data.find(menu => menu.slug === 'header');
                 if (headerMenu?.submenus?.length) {

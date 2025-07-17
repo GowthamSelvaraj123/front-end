@@ -16,7 +16,7 @@ export default function Banner({data}) {
                         
                     </p>
                     <button className="px-6 py-3 bg-red-600 hover:bg-red-700 rounded-sm text-white font-semibold transition">
-                        {data.cta}
+                        {data.bottom_text}
                     </button>
                 </div>
             </div>

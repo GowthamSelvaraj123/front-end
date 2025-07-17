@@ -3,12 +3,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 export default function HalfShowCarousel({ slides = [] }) {
-  const baseSlides = slides;
-  const loopSlides = [
-    baseSlides[baseSlides.length - 1],
-    ...baseSlides,
-    baseSlides[0],
-  ];
+  const slidescontent = slides?.find(item => item.subcards)?.subcards || [];
+  const baseSlides = slidescontent;
+ const loopSlides = baseSlides.length > 1
+    ? [baseSlides[baseSlides.length - 1], ...baseSlides, baseSlides[0]]
+    : baseSlides;
 
   const [index, setIndex] = useState(1); // start at first real slide
   const [isTransitioning, setIsTransitioning] = useState(true);
@@ -28,8 +27,9 @@ export default function HalfShowCarousel({ slides = [] }) {
 
   useEffect(() => {
     if (!isTransitioning) return;
-
-    const handleTransitionEnd = () => {
+   const track = trackRef.current;
+    if (!track) return; 
+      const handleTransitionEnd = () => {
       if (index === 0) {
         setIsTransitioning(false);
         setIndex(baseSlides.length);
@@ -38,8 +38,6 @@ export default function HalfShowCarousel({ slides = [] }) {
         setIndex(1);
       }
     };
-
-    const track = trackRef.current;
     track.addEventListener('transitionend', handleTransitionEnd);
 
     return () => {

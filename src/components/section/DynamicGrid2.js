@@ -2,6 +2,8 @@ import Image from 'next/image';
 import React from 'react';
 
 export default function DynamicGrid2({data}) {
+  const leftContent = data.cards?.find(item => item.subcards?.length === 0);
+  const gridContent = data.cards?.find(item => item.subcards?.length > 0);
   return (
     <section className="bg-white py-12 px-4">
       {/* Title & Description */}
@@ -20,10 +22,10 @@ export default function DynamicGrid2({data}) {
   <div className="basis-full md:basis-[40%] rounded-xl bg-red-100 px-20 py-16 flex items-center">
     <div className="w-full text-left flex flex-col h-full justify-evenly">
       <h3 className="text-[36px] leading-[46px] font-medium mb-4">
-              {data.leftTitle}                 
+              {leftContent.title}                 
       </h3>
       <p className="text-gray-700">
-        {data.leftDescription}
+        {leftContent.description}
       </p>
     </div>
   </div>
@@ -41,13 +43,11 @@ export default function DynamicGrid2({data}) {
     </div>
   </div>
 </div>
-
-      {/* Dynamic 2-row / 4-column Section */}
  <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-5 gap-6">
-  {data.cardData.map((item, index) => (
+  {gridContent.subcards.map((item, index) => (
     <a
       key={index}
-      href={item.link}
+      href={item.button_link}
       className=""
     >
       <div className="bg-gray-100 text-center rounded-lg shadow-sm hover:shadow-md transition duration-300 flex flex-col items-center relative overflow-hidden max-h-[260px]">

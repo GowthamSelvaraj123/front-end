@@ -7,13 +7,14 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import Image from 'next/image';
+import api from '@/lib/axios';
 
 const MondayFooter = () => {
   const [footerSections, setFooterSections] = useState([]);
 
   useEffect(() => {
-    axios
-      .get('http://103.99.150.52:8000/api/menus/')
+    api
+      .get('menus/')
       .then((res) => {
         const filteredMenus = res.data.filter((menu) => menu.slug !== 'header');
         setFooterSections(filteredMenus);
